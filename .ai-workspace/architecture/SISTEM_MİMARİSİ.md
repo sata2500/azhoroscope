@@ -23,7 +23,8 @@
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    Veri Katmanı                             │
-│         PostgreSQL + Prisma ORM                            │
+│  Vercel: PostgreSQL (Neon) + Prisma ORM                    │
+│  Self-Hosted: SQLite + Prisma ORM                          │
 │  - Kullanıcı Verileri                                       │
 │  - Doğum Haritası Bilgileri                                │
 │  - Günlük Yorumlar                                          │

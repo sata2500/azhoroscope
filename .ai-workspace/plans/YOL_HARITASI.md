@@ -5,6 +5,19 @@
 
 ---
 
+## 🗄️ Veritabanı Stratejisi
+
+**Vercel Deployment:**
+- Neon (PostgreSQL) veya Supabase
+- Managed, güvenli, yedekleme otomatik
+
+**Self-Hosted Deployment:**
+- SQLite (Yerel dosya depolaması)
+- Basit, hızlı, bakım gerektirmez
+- Otomatik yedekleme (admin panelinden)
+
+---
+
 ## v1.0 - MVP
 
 **Özellikler:**
@@ -150,6 +163,12 @@
 ---
 
 ## Admin Panel - Tüm Versiyonlar
+
+**Veritabanı Yönetimi:**
+- Veritabanı yedekleme (manuel ve otomatik)
+- Yedekleme geri yükleme
+- Veritabanı istatistikleri
+- Deployment türüne göre bağlantı ayarları
 
 **AI Ayarları:**
 - Kullanılacak AI modeli seçimi (her özellik için ayrı)

@@ -64,7 +64,8 @@ azhoroscope/
 | **Framework** | Next.js 16 (App Router) |
 | **Dil** | TypeScript |
 | **UI** | shadcn/ui + Tailwind CSS |
-| **Veritabanı** | PostgreSQL |
+| **Veritabanı (Vercel)** | Neon (PostgreSQL) |
+| **Veritabanı (Self-Hosted)** | SQLite |
 | **ORM** | Prisma |
 | **Auth** | NextAuth v5 |
 | **AI** | Google Gemini API |

@@ -8,14 +8,14 @@
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Kullanıcı Arayüzü (UI)                   │
-│         Next.js 16 (App Router) + React 19 + TypeScript     │
+│         Next.js (App Router) + React + TypeScript     │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    API Katmanı                              │
 │         Next.js API Routes (Route Handlers)                 │
-│  - Kimlik Doğrulama (NextAuth v5)                          │
+│  - Kimlik Doğrulama (NextAuth)                          │
 │  - Astroloji Hesaplamaları                                  │
 │  - AI Entegrasyonu (Gemini)                                │
 └─────────────────────────────────────────────────────────────┘

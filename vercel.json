@@ -1,0 +1,27 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "nodeVersion": "22.x",
+  "env": {
+    "NEXTAUTH_SECRET": {
+      "description": "NextAuth gizli anahtarı"
+    },
+    "NEXTAUTH_URL": {
+      "description": "NextAuth URL"
+    },
+    "DATABASE_URL": {
+      "description": "Veritabanı bağlantı URL'i"
+    },
+    "GOOGLE_CLIENT_ID": {
+      "description": "Google OAuth Client ID"
+    },
+    "GOOGLE_CLIENT_SECRET": {
+      "description": "Google OAuth Client Secret"
+    },
+    "GEMINI_API_KEY": {
+      "description": "Google Gemini API anahtarı"
+    }
+  }
+}

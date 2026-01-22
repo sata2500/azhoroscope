@@ -1,0 +1,38 @@
+# Bağımlılıklar
+node_modules/
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+.pnpm-store/
+
+# Çevre değişkenleri
+.env
+.env.local
+.env.*.local
+
+# Build çıktıları
+.next/
+out/
+dist/
+build/
+
+# IDE ve editör dosyaları
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+
+# Geçici dosyalar
+*.tmp
+*.temp
+.cache/
+
+# OS dosyaları
+Thumbs.db
+.DS_Store

@@ -1,0 +1,9 @@
+Bu proje üzerinde çalışırken, lütfen `.ai/AI_MANIFESTO.md` dosyasında tanımlanan kurallara ve protokollere SIKI SIKIYA bağlı kal.
+
+1. Her zaman TÜRKÇE konuş.
+2. Kod yazmadan önce `.ai-workspace` klasörünü kontrol et.
+3. Next.js 16 ve App Router standartlarına uygun en güncel kodları üret.
+4. Deprecated yöntemleri asla kullanma.
+5. Araştırma -> Planlama -> Kodlama -> Test -> Hata Giderme döngüsünü takip et.
+6. `main` dalı her zaman çalışır durumda olmalıdır.
+7. Gereksiz kütüphane ekleme, mevcut tech stack'i kullan.

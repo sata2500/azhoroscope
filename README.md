@@ -15,12 +15,16 @@ azhoroscope/
 │   └── AI_MANIFESTO.md          # Proje Kuralları (ZORUNLU OKU)
 ├── .ai-workspace/               # Ortak Çalışma Alanı
 │   ├── plans/                   # Geliştirme Planları
-│   │   ├── YOL_HARITASI.md     # Ana Yol Haritası (v1.0 - v10.0)
-│   │   └── PROJE_BASLANGIÇ.md  # Başlangıç Planı
+│   │   └── YOL_HARITASI.md     # Ana Yol Haritası (v1.0 - v10.0)
+│   ├── tasks/                   # Görevler
+│   │   ├── TASK_001_v1_auth_sistemi.md
+│   │   └── ...
 │   ├── research/                # Teknik Araştırmalar
 │   ├── architecture/            # Sistem Tasarımları
 │   │   └── SISTEM_MİMARİSİ.md  # Mimari Döküman
 │   ├── archive/                 # Geçmiş Belgeler
+│   ├── TASK_MANAGEMENT.md       # Görev Yönetim Sistemi
+│   ├── TASK_TRACKER.md          # Görev Takip Tablosu
 │   └── SCRATCHPAD.md           # Hızlı Notlar
 └── README.md                    # Bu Dosya
 ```
@@ -52,6 +56,7 @@ azhoroscope/
 - **Prompt Yönetimi:** AI'ya verilecek talimatları yazabilme
 - **API Key Yönetimi:** Güvenli API anahtarı saklama
 - **Model Parametreleri:** Temperature, max_tokens vb. ayarlama
+- **Veritabanı Yönetimi:** Yedekleme, geri yükleme
 - **Kullanıcı Yönetimi:** Kullanıcı listesi, roller
 - **İstatistikler:** Kullanım ve performans raporları
 
@@ -73,17 +78,82 @@ azhoroscope/
 
 ---
 
-## 🚀 Başlangıç
+## 🚀 AI Ajanlar İçin Başlangıç
 
-### AI Ajanlar İçin
+### 1. Protokolleri Oku
 
-1. `.ai/AI_MANIFESTO.md` dosyasını oku
-2. `.ai-workspace/plans/YOL_HARITASI.md` dosyasını oku
-3. `.ai-workspace/architecture/SISTEM_MİMARİSİ.md` dosyasını oku
-4. Mevcut planları kontrol et
-5. Araştır → Planla → Kodla → Test Et
+1. `.ai/AI_MANIFESTO.md` - Proje kuralları
+2. `.ai-workspace/plans/YOL_HARITASI.md` - Yol haritası
+3. `.ai-workspace/architecture/SISTEM_MİMARİSİ.md` - Sistem mimarisi
 
-### Geliştiriciler İçin
+### 2. Görev Yönetim Sistemini Anla
+
+1. `.ai-workspace/TASK_MANAGEMENT.md` - Görev yönetim sistemi
+2. `.ai-workspace/TASK_TRACKER.md` - Görev takip tablosu
+3. `.ai-workspace/tasks/TASK_XXX.md` - Spesifik görev
+
+### 3. Görev Seç ve Başla
+
+1. `.ai-workspace/TASK_TRACKER.md` dosyasında "BAŞLANMADI" durumundaki bir görev bul
+2. İlgili `.ai-workspace/tasks/TASK_XXX.md` dosyasını aç
+3. Görev dosyasında "Atanan Ajan" kısmına adını yaz
+4. Durumu "DEVAM EDIYOR" olarak değiştir
+5. Yapılacakları takip ederek çalış
+6. Tamamlandığında durumu "TAMAMLANDI" olarak işaretle
+
+### 4. Yarım Kalan Görev Devam Ettirme
+
+1. Görev dosyasını aç
+2. "Notlar" bölümünü oku
+3. Nerede kaldığını anla
+4. Atanan Ajan kısmını güncelle
+5. Devam et
+
+---
+
+## 📂 Görev Dosya Yapısı
+
+Her görev için `.ai-workspace/tasks/` klasöründe bir dosya vardır:
+
+```
+TASK_XXX_vY_kisa_aciklama.md
+├── Görev Özeti
+├── Hedefler
+├── Yapılacaklar (checklist)
+├── Bağımlılıklar
+├── Dosyalar
+├── Detaylı Adımlar
+├── Test Edilecek Durumlar
+├── Notlar
+├── Tamamlama Kriteri
+└── Sonraki Görev
+```
+
+---
+
+## 🔄 Görev Durumları
+
+| Durum | Açıklama |
+| :--- | :--- |
+| **BAŞLANMADI** | Henüz başlanmamış |
+| **DEVAM EDIYOR** | Aktif olarak çalışılıyor |
+| **BEKLEME** | Başka görevin tamamlanmasını bekliyor |
+| **TAMAMLANDI** | Tamamlanmış, test edilmiş |
+| **ARŞİVLENDİ** | Eski görev, referans için saklanıyor |
+
+---
+
+## 💡 İyi Uygulamalar
+
+1. **Detaylı Notlar:** Sonraki ajan için açık ve detaylı notlar yaz
+2. **Kod Yorumları:** Karmaşık kısımlara Türkçe yorum ekle
+3. **Hata Logları:** Karşılaştığın hataları ve çözümlerini yaz
+4. **Commit Mesajları:** Anlaşılır ve detaylı commit mesajları
+5. **Bağımlılıkları Güncelle:** Yeni bağımlılıklar eklediysen belirt
+
+---
+
+## 🚀 Geliştiriciler İçin Başlangıç
 
 1. Repoyu klonla: `git clone https://github.com/sata2500/azhoroscope.git`
 2. Bağımlılıkları yükle: `npm install`

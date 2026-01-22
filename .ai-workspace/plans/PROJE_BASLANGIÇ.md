@@ -12,14 +12,14 @@ AZ-Horoscope, yapay zeka destekli, profesyonel bir astroloji platformudur. Gerç
 
 | Bileşen | Teknoloji | Versiyon |
 |---------|-----------|---------|
-| Framework | Next.js | 16.x |
-| Dil | TypeScript | 5.x |
-| UI | shadcn/ui + Tailwind CSS | v4 |
-| Veritabanı | PostgreSQL | 14+ |
-| ORM | Prisma | 5.x |
-| Kimlik Doğrulama | NextAuth v5 (Auth.js) | 5.x |
+| Framework | Next.js | En Son Stabil-Uyumlu |
+| Dil | TypeScript | En Son Stabil-Uyumlu |
+| UI | shadcn/ui + Tailwind CSS | En Son Stabil-Uyumlu |
+| Veritabanı | PostgreSQL | En Son Stabil-Uyumlu |
+| ORM | Prisma | En Son Stabil-Uyumlu |
+| Kimlik Doğrulama | NextAuth v5 (Auth.js) | En Son Stabil-Uyumlu |
 | AI Modeli | Gemini  | Tüm Sürümler |
-| Astroloji | Swiss Ephemeris | - |
+| Astroloji | Swiss Ephemeris | En Son Stabil-Uyumlu |
 
 ## Geliştirme Aşamaları
 

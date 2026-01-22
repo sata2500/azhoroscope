@@ -18,7 +18,7 @@ AZ-Horoscope, yapay zeka destekli, profesyonel bir astroloji platformudur. Gerç
 | Veritabanı | PostgreSQL | 14+ |
 | ORM | Prisma | 5.x |
 | Kimlik Doğrulama | NextAuth v5 (Auth.js) | 5.x |
-| AI Modeli | Google Gemini 2.5 Flash | - |
+| AI Modeli | Gemini  | Tüm Sürümler |
 | Astroloji | Swiss Ephemeris | - |
 
 ## Geliştirme Aşamaları

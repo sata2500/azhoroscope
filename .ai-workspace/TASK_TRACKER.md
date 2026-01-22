@@ -8,7 +8,7 @@
 
 | # | Görev | Durum | Ajan | Başlangıç | Tamamlama | Notlar |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | Auth Sistemi (Google OAuth) | BAŞLANMADI | - | - | - | NextAuth v5 |
+| 1 | Auth Sistemi (Google OAuth) | TAMAMLANDI | Manus | 22.01.2026 | 22.01.2026 | NextAuth v5 & Prisma |
 | 2 | Günlük Yorum API | BAŞLANMADI | - | - | - | Gemini entegrasyonu |
 | 3 | Doğum Haritası Hesaplama | BAŞLANMADI | - | - | - | Kerykeion/Swiss Ephemeris |
 | 4 | Doğum Haritası Analiz | BAŞLANMADI | - | - | - | AI analiz |

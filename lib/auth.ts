@@ -29,7 +29,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
 
-  // Oturum stratejisi
+  // Oturum stratejisi - database oturumları için jwt kullanılmaz
   session: {
     strategy: 'jwt',
   },
@@ -50,7 +50,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.rol = (user as { rol?: string }).rol;
+        // role alanını user'dan al
+        token.role = (user as { role?: string }).role;
       }
       return token;
     },
@@ -61,34 +62,34 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.rol = token.rol;
+        session.user.role = token.role as string | undefined;
       }
       return session;
     },
 
     /**
-     * Authorized callback - route koruması için
+     * Authorized callback - middleware route koruması için
      */
     authorized({ auth, request: { nextUrl } }) {
-      const girisYapildi = !!auth?.user;
-      const korunmusRotalar = ['/dashboard', '/profil', '/ayarlar'];
-      const adminRotalari = ['/admin'];
+      const isLoggedIn = !!auth?.user;
+      const protectedRoutes = ['/dashboard', '/profil', '/ayarlar'];
+      const adminRoutes = ['/admin'];
 
-      const korunmusRota = korunmusRotalar.some((rota) =>
-        nextUrl.pathname.startsWith(rota)
+      const isProtectedRoute = protectedRoutes.some((route) =>
+        nextUrl.pathname.startsWith(route)
       );
-      const adminRotasi = adminRotalari.some((rota) =>
-        nextUrl.pathname.startsWith(rota)
+      const isAdminRoute = adminRoutes.some((route) =>
+        nextUrl.pathname.startsWith(route)
       );
 
       // Admin rotaları için admin rolü kontrolü
-      if (adminRotasi) {
-        return girisYapildi && (auth?.user as { rol?: string })?.rol === 'ADMIN';
+      if (isAdminRoute) {
+        return isLoggedIn && (auth?.user as { role?: string })?.role === 'ADMIN';
       }
 
       // Korunan rotalar için giriş kontrolü
-      if (korunmusRota) {
-        return girisYapildi;
+      if (isProtectedRoute) {
+        return isLoggedIn;
       }
 
       return true;

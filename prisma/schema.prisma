@@ -1,5 +1,6 @@
 // AZ-Horoscope Veritabanı Şeması
 // Prisma ORM ile SQLite (geliştirme) / PostgreSQL (üretim) desteği
+// NextAuth v5 Prisma Adapter uyumlu model isimleri
 // Daha fazla bilgi: https://pris.ly/d/prisma-schema
 
 generator client {
@@ -7,87 +8,88 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 // ==========================================
-// KULLANICI YÖNETİMİ
+// KULLANICI YÖNETİMİ (NextAuth Compatible)
 // ==========================================
 
-/// Kullanıcı modeli - NextAuth ile entegre
-model Kullanici {
-  id                String    @id @default(cuid())
-  email             String    @unique
-  emailDogrulandi   DateTime?
-  ad                String?
-  soyad             String?
-  resim             String?
-  dogumTarihi       DateTime?
-  dogumSaati        String?
-  dogumYeri         String?
-  burc              String?
-  rol               Rol       @default(KULLANICI)
-  olusturmaTarihi   DateTime  @default(now())
-  guncellemeTarihi  DateTime  @updatedAt
+/// Kullanıcı modeli - NextAuth Prisma Adapter uyumlu
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+
+  // Özel alanlar
+  birthDate  DateTime?
+  birthTime  String?
+  birthPlace String?
+  zodiacSign String?
+  role       Role      @default(USER)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
   // İlişkiler
-  hesaplar          Hesap[]
-  oturumlar         Oturum[]
-  doğumHaritasi     DogumHaritasi?
-  gunlukYorumlar    GunlukYorum[]
-  gunlukler         Gunluk[]
+  accounts      Account[]
+  sessions      Session[]
+  birthChart    BirthChart?
+  dailyReadings DailyReading[]
+  journals      Journal[]
 
   @@map("kullanicilar")
 }
 
 /// Kullanıcı rolleri
-enum Rol {
-  KULLANICI
+enum Role {
+  USER
   ADMIN
   SUPER_ADMIN
 }
 
-/// OAuth hesap bilgileri - NextAuth için
-model Hesap {
+/// OAuth hesap bilgileri - NextAuth Prisma Adapter uyumlu
+model Account {
   id                String  @id @default(cuid())
-  kullaniciId       String
-  tip               String
-  saglayici         String
-  saglayiciHesapId  String
-  yenilemeToken     String?
-  erisimToken       String?
-  tokenSonlanma     Int?
-  tokenTipi         String?
-  kapsam            String?
-  idToken           String?
-  oturumDurumu      String?
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
-  kullanici         Kullanici @relation(fields: [kullaniciId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([saglayici, saglayiciHesapId])
+  @@unique([provider, providerAccountId])
   @@map("hesaplar")
 }
 
-/// Oturum bilgileri - NextAuth için
-model Oturum {
-  id                String   @id @default(cuid())
-  oturumToken       String   @unique
-  kullaniciId       String
-  sonlanmaTarihi    DateTime
+/// Oturum bilgileri - NextAuth Prisma Adapter uyumlu
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
 
-  kullanici         Kullanici @relation(fields: [kullaniciId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("oturumlar")
 }
 
-/// Doğrulama tokenleri - NextAuth için
-model DogrulamaToken {
-  tanimlayici       String
-  token             String   @unique
-  sonlanmaTarihi    DateTime
+/// Doğrulama tokenleri - NextAuth Prisma Adapter uyumlu
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-  @@unique([tanimlayici, token])
+  @@unique([identifier, token])
   @@map("dogrulama_tokenleri")
 }
 
@@ -96,78 +98,78 @@ model DogrulamaToken {
 // ==========================================
 
 /// Doğum haritası bilgileri
-model DogumHaritasi {
-  id                String    @id @default(cuid())
-  kullaniciId       String    @unique
-  
-  // Gezegen konumları (derece cinsinden)
-  gunes             Float?
-  ay                Float?
-  merkur            Float?
-  venus             Float?
-  mars              Float?
-  jupiter           Float?
-  saturn            Float?
-  uranus            Float?
-  neptun            Float?
-  pluton            Float?
-  
-  // Yükselen burç
-  yukselenBurc      String?
-  yukselenDerece    Float?
-  
-  // Hesaplama bilgileri
-  hesaplamaTarihi   DateTime  @default(now())
-  guncellemeTarihi  DateTime  @updatedAt
+model BirthChart {
+  id     String @id @default(cuid())
+  userId String @unique
 
-  kullanici         Kullanici @relation(fields: [kullaniciId], references: [id], onDelete: Cascade)
+  // Gezegen konumları (derece cinsinden)
+  sun     Float?
+  moon    Float?
+  mercury Float?
+  venus   Float?
+  mars    Float?
+  jupiter Float?
+  saturn  Float?
+  uranus  Float?
+  neptune Float?
+  pluto   Float?
+
+  // Yükselen burç
+  ascendant       String?
+  ascendantDegree Float?
+
+  // Hesaplama bilgileri
+  calculatedAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("dogum_haritalari")
 }
 
 /// Günlük burç yorumları
-model GunlukYorum {
-  id                String    @id @default(cuid())
-  kullaniciId       String?
-  
-  tarih             DateTime
-  burc              String
-  yorumTipi         YorumTipi @default(GUNLUK)
-  yorum             String
-  aiModeli          String?
-  promptId          String?
-  
-  olusturmaTarihi   DateTime  @default(now())
+model DailyReading {
+  id     String  @id @default(cuid())
+  userId String?
 
-  kullanici         Kullanici? @relation(fields: [kullaniciId], references: [id], onDelete: SetNull)
+  date        DateTime
+  zodiacSign  String
+  readingType ReadingType @default(DAILY)
+  content     String
+  aiModel     String?
+  promptId    String?
 
-  @@index([tarih, burc])
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([date, zodiacSign])
   @@map("gunluk_yorumlar")
 }
 
 /// Yorum tipleri
-enum YorumTipi {
-  GUNLUK
-  HAFTALIK
-  AYLIK
-  YILLIK
+enum ReadingType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
 }
 
 /// Kişisel günlük
-model Gunluk {
-  id                String    @id @default(cuid())
-  kullaniciId       String
-  
-  tarih             DateTime
-  ruhHali           String?
-  notlar            String?
-  
-  olusturmaTarihi   DateTime  @default(now())
-  guncellemeTarihi  DateTime  @updatedAt
+model Journal {
+  id     String @id @default(cuid())
+  userId String
 
-  kullanici         Kullanici @relation(fields: [kullaniciId], references: [id], onDelete: Cascade)
+  date  DateTime
+  mood  String?
+  notes String?
 
-  @@index([kullaniciId, tarih])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
   @@map("gunlukler")
 }
 
@@ -176,39 +178,39 @@ model Gunluk {
 // ==========================================
 
 /// AI model ayarları
-model AiAyarlari {
-  id                String    @id @default(cuid())
-  ozellikAdi        String    @unique  // gunluk_yorum, dogum_haritasi_analiz vb.
-  
-  model             String    @default("gemini-1.5-flash")
-  temperature       Float     @default(0.7)
-  maxTokens         Int       @default(1024)
-  prompt            String?
-  
-  aktif             Boolean   @default(true)
-  olusturmaTarihi   DateTime  @default(now())
-  guncellemeTarihi  DateTime  @updatedAt
+model AiSettings {
+  id          String @id @default(cuid())
+  featureName String @unique // daily_reading, birth_chart_analysis vb.
+
+  model       String  @default("gemini-1.5-flash")
+  temperature Float   @default(0.7)
+  maxTokens   Int     @default(1024)
+  prompt      String?
+
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("ai_ayarlari")
 }
 
 /// Sistem logları
-model SistemLog {
-  id                String    @id @default(cuid())
-  seviye            LogSeviye @default(INFO)
-  kategori          String
-  mesaj             String
-  detaylar          String?
-  kullaniciId       String?
-  
-  olusturmaTarihi   DateTime  @default(now())
+model SystemLog {
+  id       String   @id @default(cuid())
+  level    LogLevel @default(INFO)
+  category String
+  message  String
+  details  String?
+  userId   String?
 
-  @@index([seviye, olusturmaTarihi])
+  createdAt DateTime @default(now())
+
+  @@index([level, createdAt])
   @@map("sistem_loglari")
 }
 
 /// Log seviyeleri
-enum LogSeviye {
+enum LogLevel {
   DEBUG
   INFO
   WARN

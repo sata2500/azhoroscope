@@ -7,12 +7,13 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-export default function HataSayfasi({
+export default async function HataSayfasi({
   searchParams,
 }: {
-  searchParams: { error?: string };
+  searchParams: Promise<{ error?: string }>;
 }) {
-  const hataKodu = searchParams.error || 'UNKNOWN';
+  const params = await searchParams;
+  const hataKodu = params.error || 'UNKNOWN';
   
   // Hata mesajlarını Türkçeye çevir
   const hataMetinleri: Record<string, string> = {
@@ -26,6 +27,7 @@ export default function HataSayfasi({
     'CredentialsSignin': 'Kimlik bilgileri hatalı',
     'SessionCallback': 'Session callback sırasında hata oluştu',
     'JWTCallback': 'JWT callback sırasında hata oluştu',
+    'Configuration': 'Sunucu yapılandırma hatası',
     'UNKNOWN': 'Bilinmeyen bir hata oluştu',
   };
 

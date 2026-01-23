@@ -3,7 +3,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "nodeVersion": "22.x",
   "env": {
     "NEXTAUTH_SECRET": {
       "description": "NextAuth gizli anahtarı"

@@ -182,7 +182,7 @@ model AiSettings {
   id          String @id @default(cuid())
   featureName String @unique // daily_reading, birth_chart_analysis vb.
 
-  model       String  @default("gemini-1.5-flash")
+  model       String  @default("gemini-2.0-flash-exp")
   temperature Float   @default(0.7)
   maxTokens   Int     @default(1024)
   prompt      String?

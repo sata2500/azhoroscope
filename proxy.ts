@@ -15,13 +15,13 @@ export default auth;
 export const config = {
   matcher: [
     /*
-     * Aşağıdaki rotalar hariç tüm rotalarda çalışır:
-     * - api (API rotaları)
-     * - _next/static (statik dosyalar)
-     * - _next/image (resim optimizasyonu)
-     * - favicon.ico (favicon)
-     * - public klasörü
+     * Aşağıdakiler HARİÇ tüm rotalar:
+     * - API routes (internal auth routes hariç)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public klasöründeki dosyalar (.svg, .png, .jpg, .jpeg, .gif, .webp)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
+    '/((?!api/(?!auth)|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };
